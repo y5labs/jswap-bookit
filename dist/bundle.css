@@ -702,7 +702,7 @@ textarea:focus {
   font-size: 20px;
   line-height: 40px;
   color: #fff;
-  background-color: #46413e;
+  background-color: #0097d6;
   border: 3px solid #fff;
 }
 .astro-week .day.selected.during div {

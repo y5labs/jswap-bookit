@@ -50,7 +50,7 @@ inject.bind('page:add', component({
   },
   render: function(state, params, hub) {
     var addBooking, cancelRename, childparams, edited, editing, keydown, keyup, ref1, rename, toggle;
-    editing = (ref1 = params != null ? params.editing : void 0) != null ? ref1 : 'nothing';
+    editing = (ref1 = params != null ? params.editing : void 0) != null ? ref1 : 'name';
     edited = params != null ? params.edited : void 0;
     if (edited == null) {
       edited = {
@@ -76,7 +76,7 @@ inject.bind('page:add', component({
         e.preventDefault();
         value = key;
         if (editing === value) {
-          value = null;
+          value = 'nothing';
         }
         return hub.emit('update', {
           editing: value
@@ -90,7 +90,7 @@ inject.bind('page:add', component({
     cancelRename = function(e) {
       e.preventDefault();
       return hub.emit('update', {
-        editing: null
+        editing: 'nothing'
       });
     };
     keydown = function(e) {
@@ -115,7 +115,7 @@ inject.bind('page:add', component({
       edited.name = edited.name.replace(/\s{2,}/g, ' ').trim();
       return hub.emit('update', {
         edited: edited,
-        editing: null,
+        editing: 'start',
         name: null
       });
     };
@@ -139,7 +139,7 @@ inject.bind('page:add', component({
             }
             return hub.emit('update', {
               edited: edited,
-              editing: null
+              editing: 'nothing'
             });
           }
         }
@@ -177,7 +177,7 @@ inject.bind('page:add', component({
               edited.name = name;
               return hub.emit('update', {
                 edited: edited,
-                editing: null,
+                editing: 'start',
                 name: null
               });
             };

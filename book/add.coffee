@@ -28,7 +28,7 @@ inject.bind 'page:add', component
   query: (state, params) ->
     bookings: ql.store 'bookings'
   render: (state, params, hub) ->
-    editing = params?.editing ? 'nothing'
+    editing = params?.editing ? 'name'
     edited = params?.edited
     if !edited?
       edited =
@@ -45,14 +45,14 @@ inject.bind 'page:add', component
       e.preventDefault()
       value = key
       if editing is value
-        value = null
+        value = 'nothing'
       hub.emit 'update', editing: value
     addBooking = (e) ->
       e.preventDefault()
       hub.emit 'add booking', edited
     cancelRename = (e) ->
       e.preventDefault()
-      hub.emit 'update', editing: null
+      hub.emit 'update', editing: 'nothing'
     keydown = (e) ->
       e.preventDefault() if e.which is 13
     keyup = (e) ->
@@ -66,7 +66,7 @@ inject.bind 'page:add', component
       edited.name = edited.name.replace(/\s{2,}/g, ' ').trim()
       hub.emit 'update',
         edited: edited
-        editing: null
+        editing: 'start'
         name: null
     return dom '.grid.main', [
       dom '.scroll.right', astro state, childparams, hub.child
@@ -85,7 +85,7 @@ inject.bind 'page:add', component
               edited.start = edited.end
             hub.emit 'update',
               edited: edited
-              editing: null
+              editing: 'nothing'
       dom '.scroll', [
         if params.deleting
           [
@@ -120,7 +120,7 @@ inject.bind 'page:add', component
                 edited.name = name
                 hub.emit 'update',
                   edited: edited
-                  editing: null
+                  editing: 'start'
                   name: null
               dom 'li', dom 'a', { onclick: choosename, attributes: href: '#' }, name
             dom '.actions', [

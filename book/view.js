@@ -92,7 +92,7 @@ inject.bind('page:view', component({
         e.preventDefault();
         value = key;
         if (editing === value) {
-          value = null;
+          value = 'nothing';
         }
         return hub.emit('update', {
           editing: value
@@ -123,13 +123,13 @@ inject.bind('page:view', component({
       e.preventDefault();
       return hub.emit('update', {
         edited: null,
-        editing: null
+        editing: 'nothing'
       });
     };
     cancelRename = function(e) {
       e.preventDefault();
       return hub.emit('update', {
-        editing: null
+        editing: 'nothing'
       });
     };
     keydown = function(e) {
@@ -154,7 +154,7 @@ inject.bind('page:view', component({
       edited.name = edited.name.replace(/\s{2,}/g, ' ').trim();
       return hub.emit('update', {
         edited: edited,
-        editing: null,
+        editing: 'nothing',
         name: null
       });
     };
@@ -178,7 +178,7 @@ inject.bind('page:view', component({
             }
             return hub.emit('update', {
               edited: edited,
-              editing: null
+              editing: 'nothing'
             });
           }
         }
@@ -216,7 +216,7 @@ inject.bind('page:view', component({
               edited.name = name;
               return hub.emit('update', {
                 edited: edited,
-                editing: null,
+                editing: 'nothing',
                 name: null
               });
             };

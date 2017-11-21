@@ -54,7 +54,7 @@ inject.bind 'page:view', component
       e.preventDefault()
       value = key
       if editing is value
-        value = null
+        value = 'nothing'
       hub.emit 'update', editing: value
     saveChanges = (e) ->
       e.preventDefault()
@@ -72,10 +72,10 @@ inject.bind 'page:view', component
       e.preventDefault()
       hub.emit 'update',
         edited: null
-        editing: null
+        editing: 'nothing'
     cancelRename = (e) ->
       e.preventDefault()
-      hub.emit 'update', editing: null
+      hub.emit 'update', editing: 'nothing'
     keydown = (e) ->
       e.preventDefault() if e.which is 13
     keyup = (e) ->
@@ -89,7 +89,7 @@ inject.bind 'page:view', component
       edited.name = edited.name.replace(/\s{2,}/g, ' ').trim()
       hub.emit 'update',
         edited: edited
-        editing: null
+        editing: 'nothing'
         name: null
     return dom '.grid.main', [
       dom '.scroll.right', astro childstate, childparams, hub.child
@@ -108,7 +108,7 @@ inject.bind 'page:view', component
               edited.start = edited.end
             hub.emit 'update',
               edited: edited
-              editing: null
+              editing: 'nothing'
       dom '.scroll', [
         if params.deleting
           [
@@ -143,7 +143,7 @@ inject.bind 'page:view', component
                 edited.name = name
                 hub.emit 'update',
                   edited: edited
-                  editing: null
+                  editing: 'nothing'
                   name: null
               dom 'li', dom 'a', { onclick: choosename, attributes: href: '#' }, name
             dom '.actions', [
