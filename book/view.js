@@ -159,30 +159,32 @@ inject.bind('page:view', component({
       });
     };
     return dom('.grid.main', [
-      dom('.scroll.right', astro(childstate, childparams, hub.child({
-        select: function(p, cb) {
-          cb();
-          if (editing === 'start') {
-            edited.start = p;
-            if (edited.end.isBefore(edited.start)) {
-              edited.end = edited.start;
+      dom('.scroll.right', [
+        dom('h1', 'Bookings for the Tauranga House'), astro(childstate, childparams, hub.child({
+          select: function(p, cb) {
+            cb();
+            if (editing === 'start') {
+              edited.start = p;
+              if (edited.end.isBefore(edited.start)) {
+                edited.end = edited.start;
+              }
+              return hub.emit('update', {
+                edited: edited,
+                editing: 'end'
+              });
+            } else if (editing === 'end') {
+              edited.end = p;
+              if (edited.start.isAfter(edited.end)) {
+                edited.start = edited.end;
+              }
+              return hub.emit('update', {
+                edited: edited,
+                editing: 'nothing'
+              });
             }
-            return hub.emit('update', {
-              edited: edited,
-              editing: 'end'
-            });
-          } else if (editing === 'end') {
-            edited.end = p;
-            if (edited.start.isAfter(edited.end)) {
-              edited.start = edited.end;
-            }
-            return hub.emit('update', {
-              edited: edited,
-              editing: 'nothing'
-            });
           }
-        }
-      }))), dom('.scroll', [
+        }))
+      ]), dom('.scroll', [
         params.deleting ? [
           dom('h2', edited.name), dom('.grid', [dom('.booking.selection', [dom('.booking-dates', [dom('small', 'ARRIVE'), ' ⋅ ', edited.start.format(nicedate)])]), dom('.booking.selection', [dom('.booking-dates', [dom('small', 'LEAVE'), ' ⋅ ', edited.end.format(nicedate)])])]), dom('.actions', [
             dom('a.action.danger', {

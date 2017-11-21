@@ -59,7 +59,9 @@ inject.bind 'page:add', component
       name = e.target.value
       name = name.replace(/[\r\n\v]+/g, '')
       e.target.value = name
-      hub.emit 'update', name: name
+      hub.emit 'update',
+        name: name
+        edited: edited
     rename = (e) ->
       e.preventDefault()
       edited.name = params.name if params?.name?
@@ -68,24 +70,27 @@ inject.bind 'page:add', component
         edited: edited
         editing: 'start'
         name: null
-    return dom '.grid.main', [
-      dom '.scroll.right', astro state, childparams, hub.child
-        select: (p, cb) ->
-          cb()
-          if editing is 'start'
-            edited.start = p
-            if edited.end.isBefore edited.start
-              edited.end = edited.start
-            hub.emit 'update',
-              edited: edited
-              editing: 'end'
-          else if editing is 'end'
-            edited.end = p
-            if edited.start.isAfter edited.end
-              edited.start = edited.end
-            hub.emit 'update',
-              edited: edited
-              editing: 'nothing'
+    dom '.grid.main', [
+      dom '.scroll.right', [
+        dom 'h1', 'Bookings for the Tauranga House'
+        astro state, childparams, hub.child
+          select: (p, cb) ->
+            cb()
+            if editing is 'start'
+              edited.start = p
+              if edited.end.isBefore edited.start
+                edited.end = edited.start
+              hub.emit 'update',
+                edited: edited
+                editing: 'end'
+            else if editing is 'end'
+              edited.end = p
+              if edited.start.isAfter edited.end
+                edited.start = edited.end
+              hub.emit 'update',
+                edited: edited
+                editing: 'nothing'
+      ]
       dom '.scroll', [
         if params.deleting
           [

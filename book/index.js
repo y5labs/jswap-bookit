@@ -84,12 +84,14 @@ res = component({
     date = moment(childparams.selectedDate);
     ids = (ref2 = (ref3 = state.bookings.timeline[childparams.selectedDate]) != null ? ref3.ids : void 0) != null ? ref2 : [];
     return dom('.grid.main', [
-      dom('.scroll.right', astro(state, childparams, hub.child({
-        select: function(p, cb) {
-          cb();
-          return hub.emit('select date', p.format(simpledate));
-        }
-      }))), dom('.scroll', [
+      dom('.scroll.right', [
+        dom('h1', 'Bookings for the Tauranga House'), astro(state, childparams, hub.child({
+          select: function(p, cb) {
+            cb();
+            return hub.emit('select date', p.format(simpledate));
+          }
+        }))
+      ]), dom('.scroll', [
         dom('h2', date.format(nicedate)), dom('.bookings', ids.map(function(id) {
           var bookingend, bookingstart, e;
           e = state.bookings.events[id];

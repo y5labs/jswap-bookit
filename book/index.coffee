@@ -48,11 +48,14 @@ res = component
       selectedDate: state?.selectedDate ? today.format simpledate
     date = moment childparams.selectedDate
     ids = state.bookings.timeline[childparams.selectedDate]?.ids ? []
-    return dom '.grid.main', [
-      dom '.scroll.right', astro state, childparams, hub.child
-        select: (p, cb) ->
-          cb()
-          hub.emit 'select date', p.format simpledate
+    dom '.grid.main', [
+      dom '.scroll.right', [
+        dom 'h1', 'Bookings for the Tauranga House'
+        astro state, childparams, hub.child
+          select: (p, cb) ->
+            cb()
+            hub.emit 'select date', p.format simpledate
+      ]
       dom '.scroll', [
         dom 'h2', date.format nicedate
         dom '.bookings', ids.map (id) ->

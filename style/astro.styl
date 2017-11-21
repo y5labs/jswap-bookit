@@ -42,6 +42,8 @@ astro-block()
   &.selected-during
     background-color $selected
     color white
+  &.weekend:not(.selected):not(.during):not(.selected-start):not(.selected-end):not(.selected-during):not(.start):not(.end):not(.past)
+    color $brand-secondary
 
   &.selected-start:after,
   &.selected-end:after

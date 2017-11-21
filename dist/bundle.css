@@ -722,6 +722,9 @@ textarea:focus {
   background-color: #0097d6;
   color: #fff;
 }
+.astro-week .day.weekend:not(.selected):not(.during):not(.selected-start):not(.selected-end):not(.selected-during):not(.start):not(.end):not(.past) {
+  color: #d91f37;
+}
 .astro-week .day.selected-start:after,
 .astro-week .day.selected-end:after,
 .astro-week .day.start:before,
