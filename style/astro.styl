@@ -1,0 +1,84 @@
+astro-block()
+  display inline-block
+  text-align center
+  line-height 34px
+  width 36px
+  height 36px
+
+.astro-week .day
+  astro-block()
+  color $primary
+  text-decoration none
+  border 1px solid $subtle-border
+  margin -1px 0 0 -1px
+  position relative
+  span
+    position relative
+    z-index 2
+  &.empty
+    color transparent
+    border-color transparent
+  &.selected div
+    position absolute
+    top -6px
+    left -6px
+    right -6px
+    bottom -6px
+    z-index 3
+    font-size 20px
+    line-height 40px
+    color white
+    background-color $primary
+    border 3px solid white
+  &.selected.during div
+    background-color $brand-primary
+  &.selected.selected-during div
+    background-color $selected
+  &.past
+    color $subtle-border
+  &.during
+    background-color $brand-primary
+    color white
+  &.selected-during
+    background-color $selected
+    color white
+
+  &.selected-start:after,
+  &.selected-end:after
+  &.start:before,
+  &.end:before
+    content " "
+    position absolute
+    top 0
+    left 0
+    width 0px
+    height 0px
+    pointer-events none
+
+  &.selected-start:after
+    border-top 17px solid transparent
+    border-left 17px solid transparent
+    border-right 17px solid $selected
+    border-bottom 17px solid $selected
+    z-index 1
+
+  &.selected-end:after
+    border-top 17px solid $selected
+    border-left 17px solid $selected
+    border-right 17px solid transparent
+    border-bottom 17px solid transparent
+    z-index 1
+
+  &.start:before
+    border-top 17px solid transparent
+    border-left 17px solid transparent
+    border-right 17px solid $brand-primary
+    border-bottom 17px solid $brand-primary
+    z-index -1
+
+  &.end:before
+    border-top 17px solid $brand-primary
+    border-left 17px solid $brand-primary
+    border-right 17px solid transparent
+    border-bottom 17px solid transparent
+    z-index -1
