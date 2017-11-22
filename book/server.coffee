@@ -92,3 +92,6 @@ module.exports.query = (req, store) ->
       cb null,
         events: events
         timeline: timeline
+
+  store.use 'config', (params, cb) ->
+    cb null, config

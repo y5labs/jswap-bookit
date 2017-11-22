@@ -8,7 +8,6 @@ route = require 'odo-route'
 odoql = require 'odoql/odojs'
 page = require 'page'
 request = require 'superagent'
-config = require '../config'
 component.use odoql
 
 ql = require 'odoql'
@@ -96,6 +95,7 @@ res = component
   query: (state, params) ->
     bookings: ql.store 'bookings'
     selectedDate: ql.localstore 'selectedDate'
+    config: ql.store 'config'
   render: (state, params, hub) ->
     today = moment().startOf 'd'
     childparams =
@@ -104,7 +104,7 @@ res = component
     ids = state.bookings.timeline[childparams.selectedDate]?.ids ? []
     dom '.grid.main', [
       dom '.scroll.right', [
-        dom 'h1', config.title
+        dom 'h1', state.config.title
         astro state, childparams, hub.child
           select: (p, cb) ->
             cb()

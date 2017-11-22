@@ -142,7 +142,7 @@ module.exports = function(app) {
 };
 
 module.exports.query = function(req, store) {
-  return store.use('bookings', function(params, cb) {
+  store.use('bookings', function(params, cb) {
     return readbookings(function(err, events) {
       var timeline;
       if (err != null) {
@@ -154,5 +154,8 @@ module.exports.query = function(req, store) {
         timeline: timeline
       });
     });
+  });
+  return store.use('config', function(params, cb) {
+    return cb(null, config);
   });
 };

@@ -8,7 +8,6 @@ route = require 'odo-route'
 odoql = require 'odoql/odojs'
 component.use odoql
 buildtimeline = require './buildtimeline'
-config = require '../config'
 
 ql = require 'odoql'
 ql = ql
@@ -26,6 +25,7 @@ route '/addbooking/:start/:end', (p) ->
 inject.bind 'page:add', component
   query: (state, params) ->
     bookings: ql.store 'bookings'
+    config: ql.store 'config'
   render: (state, params, hub) ->
     editing = params?.editing ? 'name'
     edited = params?.edited
@@ -71,7 +71,7 @@ inject.bind 'page:add', component
         name: null
     dom '.grid.main', [
       dom '.scroll.right', [
-        dom 'h1', config.title
+        dom 'h1', state.config.title
         astro state, childparams, hub.child
           select: (p, cb) ->
             cb()
@@ -118,7 +118,7 @@ inject.bind 'page:add', component
         else if editing is 'name'
           [
             dom 'textarea', { onkeydown: keydown, onkeyup: keyup, attributes: autofocus: 'autofocus', name: 'name', autocomplete: 'off', autocorrect: 'off', autocapitalize: 'on', spellcheck: 'false', placeholder: 'Enter name or select below…' }, edited.name
-            dom 'ul.defaultnames', config.defaultnames.map (name) ->
+            dom 'ul.defaultnames', state.config.defaultnames.map (name) ->
               choosename = (e) ->
                 e.preventDefault()
                 edited.name = name
