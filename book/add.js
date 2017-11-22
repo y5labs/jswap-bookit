@@ -33,10 +33,9 @@ shortdate = 'ddd D MMMM';
 
 simpledate = 'YYYY-MM-DD';
 
-route('/addbooking/:name/:start/:end', function(p) {
+route('/addbooking/:start/:end', function(p) {
   return {
     page: 'add',
-    name: p.params.name,
     start: p.params.start,
     end: p.params.end
   };
@@ -54,7 +53,7 @@ inject.bind('page:add', component({
     edited = params != null ? params.edited : void 0;
     if (edited == null) {
       edited = {
-        name: params.name,
+        name: '',
         start: moment(params.start),
         end: moment(params.end)
       };
@@ -171,7 +170,8 @@ inject.bind('page:add', component({
               autocomplete: 'off',
               autocorrect: 'off',
               autocapitalize: 'on',
-              spellcheck: 'false'
+              spellcheck: 'false',
+              placeholder: 'Enter name or select below…'
             }
           }, edited.name), dom('ul.defaultnames', defaultnames.map(function(name) {
             var choosename;
@@ -221,7 +221,21 @@ inject.bind('page:add', component({
                 href: '#'
               }
             }, [dom('.booking-dates', [dom('small', 'LEAVE'), ' ⋅ ', edited.end.format(nicedate)])])
-          ]), editing === 'start' ? dom('h2', '← Select arrival date') : editing === 'end' ? dom('h2', '← Select leaving date') : editing === 'nothing' ? dom('.actions', [
+          ]), editing === 'start' ? [
+            dom('h2', '← Select arrival date'), dom('.actions', dom('a.action', {
+              onclick: toggle('end'),
+              attributes: {
+                href: '#'
+              }
+            }, 'Next  →'))
+          ] : editing === 'end' ? [
+            dom('h2', '← Select leaving date'), dom('.actions', dom('a.action', {
+              onclick: toggle('nothing'),
+              attributes: {
+                href: '#'
+              }
+            }, 'Next  →'))
+          ] : editing === 'nothing' ? dom('.actions', [
             dom('a.action', {
               attributes: {
                 href: '/'

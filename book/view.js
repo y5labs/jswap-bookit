@@ -209,7 +209,8 @@ inject.bind('page:view', component({
               autocomplete: 'off',
               autocorrect: 'off',
               autocapitalize: 'on',
-              spellcheck: 'false'
+              spellcheck: 'false',
+              placeholder: 'Enter name or select below…'
             }
           }, edited.name), dom('ul.defaultnames', defaultnames.map(function(name) {
             var choosename;
@@ -259,7 +260,21 @@ inject.bind('page:view', component({
                 href: '#'
               }
             }, [dom('.booking-dates', [dom('small', 'LEAVE'), ' ⋅ ', edited.end.format(nicedate)])])
-          ]), editing === 'start' ? dom('h2', '← Select arrival date') : editing === 'end' ? dom('h2', '← Select leaving date') : editing === 'nothing' ? dom('.actions', [
+          ]), editing === 'start' ? [
+            dom('h2', '← Select arrival date'), dom('.actions', dom('a.action', {
+              onclick: toggle('end'),
+              attributes: {
+                href: '#'
+              }
+            }, 'Next  →'))
+          ] : editing === 'end' ? [
+            dom('h2', '← Select leaving date'), dom('.actions', dom('a.action', {
+              onclick: toggle('nothing'),
+              attributes: {
+                href: '#'
+              }
+            }, 'Next  →'))
+          ] : editing === 'nothing' ? dom('.actions', [
             !haschanges ? [
               dom('a.action', {
                 onclick: beginDeleteBooking,

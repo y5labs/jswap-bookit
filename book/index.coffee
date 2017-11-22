@@ -6,6 +6,8 @@ moment = chrono moment
 astro = require './astro'
 route = require 'odo-route'
 odoql = require 'odoql/odojs'
+page = require 'page'
+request = require 'superagent'
 component.use odoql
 
 ql = require 'odoql'
@@ -35,6 +37,57 @@ module.exports = (hub, scene, localstore) ->
     hub.emit 'update'
   localstore.use 'selectedDate', (params, cb) ->
     cb null, get 'selectedDate'
+
+  hub.every 'add booking', (p, cb) ->
+    payload =
+      name: p.name
+      start: moment(p.start).format simpledate
+      end: moment(p.end).format simpledate
+    request
+      .post '/v0/addbooking'
+      .send payload
+      .end (err, res) ->
+        if err?
+          alert err
+          return
+        unless res.ok
+          alert res.text
+          return
+        scene.refreshQueries ['bookings']
+        page "/booking/#{p.id}"
+
+  hub.every 'delete booking', (p, cb) ->
+    request
+      .post '/v0/deletebooking'
+      .send { id: p.id }
+      .end (err, res) ->
+        if err?
+          alert err
+          return
+        unless res.ok
+          alert res.text
+          return
+        scene.refreshQueries ['bookings']
+        page '/'
+
+  hub.every 'change booking', (p, cb) ->
+    payload =
+      id: p.id
+      name: p.name
+      start: moment(p.start).format simpledate
+      end: moment(p.end).format simpledate
+    request
+      .post '/v0/changebooking'
+      .send payload
+      .end (err, res) ->
+        if err?
+          alert err
+          return
+        unless res.ok
+          alert res.text
+          return
+        scene.refreshQueries ['bookings']
+        page "/booking/#{p.id}"
 
 route '/', (p) -> page: 'list'
 
@@ -77,7 +130,7 @@ res = component
             ]
             dom '.booking-dates', "#{bookingstart.format shortdate} — #{bookingend.format shortdate}"
           ]
-        dom '.actions', dom 'a.action', { attributes: href: "/addbooking/Booking%20name/#{childparams.selectedDate}/#{date.clone().add(2, 'd').format simpledate}/"}, '＋  Add Booking'
+        dom '.actions', dom 'a.action', { attributes: href: "/addbooking/#{childparams.selectedDate}/#{date.clone().add(2, 'd').format simpledate}/"}, '＋  Add Booking'
       ]
     ]
 

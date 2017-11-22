@@ -18,9 +18,8 @@ nicedate = 'dddd D MMMM YYYY'
 shortdate = 'ddd D MMMM'
 simpledate = 'YYYY-MM-DD'
 
-route '/addbooking/:name/:start/:end', (p) ->
+route '/addbooking/:start/:end', (p) ->
   page: 'add'
-  name: p.params.name
   start: p.params.start
   end: p.params.end
 
@@ -32,7 +31,7 @@ inject.bind 'page:add', component
     edited = params?.edited
     if !edited?
       edited =
-        name: params.name
+        name: ''
         start: moment params.start
         end: moment params.end
     childparams =
@@ -118,7 +117,7 @@ inject.bind 'page:add', component
           ]
         else if editing is 'name'
           [
-            dom 'textarea', { onkeydown: keydown, onkeyup: keyup, attributes: autofocus: 'autofocus', name: 'name', autocomplete: 'off', autocorrect: 'off', autocapitalize: 'on', spellcheck: 'false' }, edited.name
+            dom 'textarea', { onkeydown: keydown, onkeyup: keyup, attributes: autofocus: 'autofocus', name: 'name', autocomplete: 'off', autocorrect: 'off', autocapitalize: 'on', spellcheck: 'false', placeholder: 'Enter name or select below…' }, edited.name
             dom 'ul.defaultnames', defaultnames.map (name) ->
               choosename = (e) ->
                 e.preventDefault()
@@ -157,9 +156,15 @@ inject.bind 'page:add', component
               ]
             ]
             if editing is 'start'
-              dom 'h2', '← Select arrival date'
+              [
+                dom 'h2', '← Select arrival date'
+                dom '.actions', dom 'a.action', { onclick: toggle('end'), attributes: href: '#' }, 'Next  →'
+              ]
             else if editing is 'end'
-              dom 'h2', '← Select leaving date'
+              [
+                dom 'h2', '← Select leaving date'
+                dom '.actions', dom 'a.action', { onclick: toggle('nothing'), attributes: href: '#' }, 'Next  →'
+              ]
             else if editing is 'nothing'
               dom '.actions', [
                 dom 'a.action', { attributes: href: '/' }, '⤺  Cancel'

@@ -139,7 +139,7 @@ inject.bind 'page:view', component
           ]
         else if editing is 'name'
           [
-            dom 'textarea', { onkeydown: keydown, onkeyup: keyup, attributes: autofocus: 'autofocus', name: 'name', autocomplete: 'off', autocorrect: 'off', autocapitalize: 'on', spellcheck: 'false' }, edited.name
+            dom 'textarea', { onkeydown: keydown, onkeyup: keyup, attributes: autofocus: 'autofocus', name: 'name', autocomplete: 'off', autocorrect: 'off', autocapitalize: 'on', spellcheck: 'false', placeholder: 'Enter name or select below…' }, edited.name
             dom 'ul.defaultnames', defaultnames.map (name) ->
               choosename = (e) ->
                 e.preventDefault()
@@ -178,9 +178,15 @@ inject.bind 'page:view', component
               ]
             ]
             if editing is 'start'
-              dom 'h2', '← Select arrival date'
+              [
+                dom 'h2', '← Select arrival date'
+                dom '.actions', dom 'a.action', { onclick: toggle('end'), attributes: href: '#' }, 'Next  →'
+              ]
             else if editing is 'end'
-              dom 'h2', '← Select leaving date'
+              [
+                dom 'h2', '← Select leaving date'
+                dom '.actions', dom 'a.action', { onclick: toggle('nothing'), attributes: href: '#' }, 'Next  →'
+              ]
             else if editing is 'nothing'
               dom '.actions', [
                 if !haschanges
