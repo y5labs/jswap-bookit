@@ -1062,7 +1062,11 @@ module.exports = Router;
 },{"injectinto":21,"odojs":53}],8:[function(require,module,exports){
 module.exports = {
   title: 'Book this thing',
+  domain: 'thing.com',
+  timezone: 'Pacific/Auckland',
   password: 'password',
+  company: 'TCOATS',
+  product: 'BookIT',
   defaultnames: [
     'Ben Stiller',
     'Robin Williams'

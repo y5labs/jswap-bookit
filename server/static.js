@@ -4,9 +4,10 @@ module.exports = function(app) {
   path = require('path');
   express = require('express');
   oneDay = 1000 * 60 * 60 * 24;
-  return app.use('/dist', [
+  app.use('/dist', [
     express["static"](path.join(__dirname, '../', 'dist'), {
       maxAge: oneDay
     })
   ]);
+  return app.use('/data', [express["static"](path.join(__dirname, '../', 'data'))]);
 };

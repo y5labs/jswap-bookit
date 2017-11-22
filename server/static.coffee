@@ -3,3 +3,4 @@ module.exports = (app) ->
   express = require 'express'
   oneDay = 1000 * 60 * 60 * 24
   app.use '/dist', [express.static path.join(__dirname, '../', 'dist'), maxAge: oneDay]
+  app.use '/data', [express.static path.join(__dirname, '../', 'data')]

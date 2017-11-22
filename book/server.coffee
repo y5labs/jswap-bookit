@@ -7,9 +7,8 @@ moment = chrono moment
 simpledate = 'YYYY-MM-DD'
 
 buildtimeline = require './buildtimeline'
-
-islocked = no
-callbacks = []
+ical = require 'ical-generator'
+config = require '../config'
 
 readbookings = (cb) ->
   fs.readFile './data/bookings.csv', 'utf-8', (err, data) ->
@@ -23,7 +22,20 @@ readbookings = (cb) ->
 
 writebookings = (events, cb) ->
   events = Object.keys(events).map (id) -> events[id]
-  fs.writeFile './data/bookings.csv', baby.unparse(events), cb
+  cal = ical
+    domain: config.domain
+    name: config.title
+    timezone: config.timezone
+    prodId:
+      company: config.company
+      product: config.product
+  cal.events events.map (e) ->
+    start: moment(e.start).add(14, 'h').toDate()
+    end: moment(e.end).add(10, 'h').toDate()
+    summary: e.name
+  cal.save './data/bookings.ics', (err) ->
+    return cb err if err?
+    fs.writeFile './data/bookings.csv', baby.unparse(events), cb
 
 module.exports = (app) ->
   app.post '/v0/addbooking', (req, res) ->
