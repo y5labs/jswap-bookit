@@ -8,6 +8,7 @@ route = require 'odo-route'
 odoql = require 'odoql/odojs'
 page = require 'page'
 request = require 'superagent'
+config = require '../config'
 component.use odoql
 
 ql = require 'odoql'
@@ -103,7 +104,7 @@ res = component
     ids = state.bookings.timeline[childparams.selectedDate]?.ids ? []
     dom '.grid.main', [
       dom '.scroll.right', [
-        dom 'h1', 'Bookings for the Tauranga House'
+        dom 'h1', config.title
         astro state, childparams, hub.child
           select: (p, cb) ->
             cb()

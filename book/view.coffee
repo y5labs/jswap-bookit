@@ -8,7 +8,7 @@ route = require 'odo-route'
 odoql = require 'odoql/odojs'
 component.use odoql
 buildtimeline = require './buildtimeline'
-defaultnames = require './defaultnames'
+config = require '../config'
 
 ql = require 'odoql'
 ql = ql
@@ -93,7 +93,7 @@ inject.bind 'page:view', component
         name: null
     return dom '.grid.main', [
       dom '.scroll.right', [
-        dom 'h1', 'Bookings for the Tauranga House'
+        dom 'h1', config.title
         astro childstate, childparams, hub.child
           select: (p, cb) ->
             cb()
@@ -140,7 +140,7 @@ inject.bind 'page:view', component
         else if editing is 'name'
           [
             dom 'textarea', { onkeydown: keydown, onkeyup: keyup, attributes: autofocus: 'autofocus', name: 'name', autocomplete: 'off', autocorrect: 'off', autocapitalize: 'on', spellcheck: 'false', placeholder: 'Enter name or select below…' }, edited.name
-            dom 'ul.defaultnames', defaultnames.map (name) ->
+            dom 'ul.defaultnames', config.defaultnames.map (name) ->
               choosename = (e) ->
                 e.preventDefault()
                 edited.name = name
