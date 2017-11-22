@@ -87,7 +87,7 @@ module.exports = function(app) {
           return res.status(500).send(err);
         }
         return res.send({
-          id: id
+          id: req.body.id
         });
       });
     });
@@ -112,7 +112,7 @@ module.exports = function(app) {
           return res.status(500).send(err);
         }
         return res.send({
-          id: booking.id
+          id: req.body.id
         });
       });
     });

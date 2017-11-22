@@ -15,6 +15,7 @@ whakaruru ->
   app.set 'json spaces', 2
 
   pods = [
+    require './server/auth'
     require './server/static'
     require './server/query'
     require './book/server'

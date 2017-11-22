@@ -103,7 +103,7 @@ inject.bind 'page:view', component
                 edited.end = edited.start
               hub.emit 'update',
                 edited: edited
-                editing: 'end'
+                editing: 'nothing'
             else if editing is 'end'
               edited.end = p
               if edited.start.isAfter edited.end

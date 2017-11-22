@@ -54,7 +54,7 @@ module.exports = (hub, scene, localstore) ->
           alert res.text
           return
         scene.refreshQueries ['bookings']
-        page "/booking/#{p.id}"
+        page '/'
 
   hub.every 'delete booking', (p, cb) ->
     request
@@ -87,7 +87,7 @@ module.exports = (hub, scene, localstore) ->
           alert res.text
           return
         scene.refreshQueries ['bookings']
-        page "/booking/#{p.id}"
+        page '/'
 
 route '/', (p) -> page: 'list'
 

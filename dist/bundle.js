@@ -490,7 +490,7 @@ module.exports = function(hub, scene, localstore) {
         return;
       }
       scene.refreshQueries(['bookings']);
-      return page("/booking/" + p.id);
+      return page('/');
     });
   });
   hub.every('delete booking', function(p, cb) {
@@ -527,7 +527,7 @@ module.exports = function(hub, scene, localstore) {
         return;
       }
       scene.refreshQueries(['bookings']);
-      return page("/booking/" + p.id);
+      return page('/');
     });
   });
 };
@@ -759,7 +759,7 @@ inject.bind('page:view', component({
               }
               return hub.emit('update', {
                 edited: edited,
-                editing: 'end'
+                editing: 'nothing'
               });
             } else if (editing === 'end') {
               edited.end = p;

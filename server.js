@@ -20,7 +20,7 @@ whakaruru(function() {
     limit: '50mb'
   }));
   app.set('json spaces', 2);
-  pods = [require('./server/static'), require('./server/query'), require('./book/server'), require('./server/root')];
+  pods = [require('./server/auth'), require('./server/static'), require('./server/query'), require('./book/server'), require('./server/root')];
   for (i = 0, len = pods.length; i < len; i++) {
     pod = pods[i];
     pod(app, httpServer);

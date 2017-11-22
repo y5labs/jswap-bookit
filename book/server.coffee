@@ -53,7 +53,7 @@ module.exports = (app) ->
           else
             console.error err
           return res.status(500).send(err)
-        res.send id: id
+        res.send id: req.body.id
 
   app.post '/v0/changebooking', (req, res) ->
     readbookings (err, events) ->
@@ -70,7 +70,7 @@ module.exports = (app) ->
           else
             console.error err
           return res.status(500).send(err)
-        res.send id: booking.id
+        res.send id: req.body.id
 
 module.exports.query = (req, store) ->
   store.use 'bookings', (params, cb) ->

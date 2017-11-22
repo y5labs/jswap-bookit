@@ -170,7 +170,7 @@ inject.bind('page:view', component({
               }
               return hub.emit('update', {
                 edited: edited,
-                editing: 'end'
+                editing: 'nothing'
               });
             } else if (editing === 'end') {
               edited.end = p;
