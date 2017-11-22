@@ -201,7 +201,7 @@ inject.bind('page:add', component({
               attributes: {
                 href: '#'
               }
-            }, '✓  Change') : void 0
+            }, '✓  Done') : void 0
           ])
         ] : [
           dom('h2', dom('a', {

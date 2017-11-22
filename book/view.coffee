@@ -152,7 +152,7 @@ inject.bind 'page:view', component
             dom '.actions', [
               dom 'a.action', { onclick: cancelRename, attributes: href: '#' }, '⤺  Cancel'
               if params?.name? and params.name.replace(/\s{2,}/g, ' ').trim() isnt edited.name
-                dom 'a.action.primary', { onclick: rename, attributes: href: '#' }, '✓  Change'
+                dom 'a.action.primary', { onclick: rename, attributes: href: '#' }, '✓  Done'
             ]
           ]
         else
