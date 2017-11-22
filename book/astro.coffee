@@ -51,5 +51,5 @@ module.exports = component render: (state, params, hub) ->
               dom 'span', d.format 'D'
               dom 'div', d.format 'D'
             ]
-          dom "a.day#{if d.isoWeekday() > 5 then '.weekend' else ''}#{if d.isBefore today then '.past' else ''}#{if day.isstart then '.start' else if day.isend then '.end' else if day.isduring then '.during' else ''}#{if isselectedstart then '.selected-start' else if isselectedend then '.selected-end' else if isselected then '.selected-during' else ''}", { onclick: select(d), attributes: href: '#' }, dom 'span', d.format 'D'
+          dom "a.day#{if d.isoWeekday() > 5 then '.weekend' else ''}#{if d.isBefore today then '.past' else ''}#{if day.isstart then '.start' else ''}#{if day.isend then '.end' else ''}#{if day.isduring then '.during' else ''}#{if isselectedstart then '.selected-start' else if isselectedend then '.selected-end' else if isselected then '.selected-during' else ''}", { onclick: select(d), attributes: href: '#' }, dom 'span', d.format 'D'
     ]

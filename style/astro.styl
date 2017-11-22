@@ -46,8 +46,8 @@ astro-block()
     color $brand-secondary
 
   &.selected-start:after,
-  &.selected-end:after
-  &.start:before,
+  &.selected-end:before
+  &.start:after,
   &.end:before
     content " "
     position absolute
@@ -57,21 +57,7 @@ astro-block()
     height 0px
     pointer-events none
 
-  &.selected-start:after
-    border-top 17px solid transparent
-    border-left 17px solid transparent
-    border-right 17px solid $selected
-    border-bottom 17px solid transparent
-    z-index 1
-
-  &.selected-end:after
-    border-top 17px solid transparent
-    border-left 17px solid $selected
-    border-right 17px solid transparent
-    border-bottom 17px solid transparent
-    z-index 1
-
-  &.start:before
+  &.start:after
     border-top 17px solid transparent
     border-left 17px solid transparent
     border-right 17px solid $brand-primary
@@ -84,3 +70,17 @@ astro-block()
     border-right 17px solid transparent
     border-bottom 17px solid transparent
     z-index -1
+
+  &.selected-start:after
+    border-top 17px solid transparent
+    border-left 17px solid transparent
+    border-right 17px solid $selected
+    border-bottom 17px solid transparent
+    z-index 1
+
+  &.selected-end:before
+    border-top 17px solid transparent
+    border-left 17px solid $selected
+    border-right 17px solid transparent
+    border-bottom 17px solid transparent
+    z-index 1

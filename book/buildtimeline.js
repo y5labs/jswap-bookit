@@ -21,35 +21,32 @@ module.exports = function(events) {
       date = d.format(simpledate);
       if (timeline[date] == null) {
         timeline[date] = {
-          count: 0,
           ids: {}
         };
       }
-      timeline[date].count += 3;
+      timeline[date].isduring = true;
       timeline[date].ids[id] = true;
     }
     if (timeline[e.start] == null) {
       timeline[e.start] = {
-        count: 0,
         ids: {}
       };
     }
-    timeline[e.start].count += 1;
+    timeline[e.start].isstart = true;
     timeline[e.start].ids[id] = true;
     if (timeline[e.end] == null) {
       timeline[e.end] = {
-        count: 0,
         ids: {}
       };
     }
-    timeline[e.end].count += 2;
+    timeline[e.end].isend = true;
     timeline[e.end].ids[id] = true;
   }
   for (d in timeline) {
     day = timeline[d];
-    day.isstart = day.count === 1;
-    day.isend = day.count === 2;
-    day.isduring = day.count >= 3;
+    day.isstart = !day.isduring && day.isstart;
+    day.isend = !day.isduring && day.isend;
+    day.isduring = day.isduring;
     delete day.count;
     day.ids = Object.keys(day.ids);
   }

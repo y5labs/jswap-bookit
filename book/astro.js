@@ -73,7 +73,7 @@ module.exports = component({
                 }
               }, [dom('span', d.format('D')), dom('div', d.format('D'))]);
             }
-            return dom("a.day" + (d.isoWeekday() > 5 ? '.weekend' : '') + (d.isBefore(today) ? '.past' : '') + (day.isstart ? '.start' : day.isend ? '.end' : day.isduring ? '.during' : '') + (isselectedstart ? '.selected-start' : isselectedend ? '.selected-end' : isselected ? '.selected-during' : ''), {
+            return dom("a.day" + (d.isoWeekday() > 5 ? '.weekend' : '') + (d.isBefore(today) ? '.past' : '') + (day.isstart ? '.start' : '') + (day.isend ? '.end' : '') + (day.isduring ? '.during' : '') + (isselectedstart ? '.selected-start' : isselectedend ? '.selected-end' : isselected ? '.selected-during' : ''), {
               onclick: select(d),
               attributes: {
                 href: '#'

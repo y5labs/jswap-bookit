@@ -726,8 +726,8 @@ textarea:focus {
   color: #d91f37;
 }
 .astro-week .day.selected-start:after,
-.astro-week .day.selected-end:after,
-.astro-week .day.start:before,
+.astro-week .day.selected-end:before,
+.astro-week .day.start:after,
 .astro-week .day.end:before {
   content: " ";
   position: absolute;
@@ -737,21 +737,7 @@ textarea:focus {
   height: 0px;
   pointer-events: none;
 }
-.astro-week .day.selected-start:after {
-  border-top: 17px solid transparent;
-  border-left: 17px solid transparent;
-  border-right: 17px solid #0097d6;
-  border-bottom: 17px solid transparent;
-  z-index: 1;
-}
-.astro-week .day.selected-end:after {
-  border-top: 17px solid transparent;
-  border-left: 17px solid #0097d6;
-  border-right: 17px solid transparent;
-  border-bottom: 17px solid transparent;
-  z-index: 1;
-}
-.astro-week .day.start:before {
+.astro-week .day.start:after {
   border-top: 17px solid transparent;
   border-left: 17px solid transparent;
   border-right: 17px solid #30c100;
@@ -764,4 +750,18 @@ textarea:focus {
   border-right: 17px solid transparent;
   border-bottom: 17px solid transparent;
   z-index: -1;
+}
+.astro-week .day.selected-start:after {
+  border-top: 17px solid transparent;
+  border-left: 17px solid transparent;
+  border-right: 17px solid #0097d6;
+  border-bottom: 17px solid transparent;
+  z-index: 1;
+}
+.astro-week .day.selected-end:before {
+  border-top: 17px solid transparent;
+  border-left: 17px solid #0097d6;
+  border-right: 17px solid transparent;
+  border-bottom: 17px solid transparent;
+  z-index: 1;
 }
