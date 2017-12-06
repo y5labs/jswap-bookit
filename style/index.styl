@@ -66,6 +66,32 @@ table
     font-weight bold
   .booking-dates
     margin-top 3px
+  .booking-tags
+    float right
+    span
+      border 1px solid $primary
+      border-radius 3px
+      padding 1px 5px
+      font-size 11px
+      text-transform uppercase
+    span + span
+      margin-left 5px
+
+.tagselection
+  margin-top 10px
+
+.tag
+  border 1px solid $subtle-border
+  color $subtle-border
+  border-radius 3px
+  padding 1px 5px
+  text-transform uppercase
+  text-decoration none
+  &.selected
+    border-color $primary
+    color $primary
+.tag + .tag
+  margin-left 5px
 
 .action
   text-decoration none

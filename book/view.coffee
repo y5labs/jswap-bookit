@@ -8,6 +8,7 @@ route = require 'odo-route'
 odoql = require 'odoql/odojs'
 component.use odoql
 buildtimeline = require './buildtimeline'
+extend = require 'extend'
 
 ql = require 'odoql'
 ql = ql
@@ -35,6 +36,9 @@ inject.bind 'page:view', component
         name: e.name
         start: moment e.start
         end: moment e.end
+        tags: {}
+      for t in Object.keys e.tags
+        edited.tags[t] = yes
     childparams =
       selectedRange: { start: edited.start, end: edited.end }
     childstate =
@@ -49,7 +53,10 @@ inject.bind 'page:view', component
       childparams.selectedDate = edited.start
     else if editing is 'end'
       childparams.selectedDate = edited.end
-    haschanges = edited.name isnt e.name or !edited.start.isSame(moment(e.start)) or !edited.end.isSame(moment(e.end))
+    haschanges = edited.name isnt e.name or !edited.start.isSame(moment(e.start)) or !edited.end.isSame(moment(e.end)) or Object.keys(edited.tags).length isnt Object.keys(e.tags).length
+    if !haschanges
+      for t in Object.keys(edited.tags) when !e.tags[t]?
+        haschanges = yes
     toggle = (key) -> (e) ->
       e.preventDefault()
       value = key
@@ -85,6 +92,7 @@ inject.bind 'page:view', component
       hub.emit 'update', name: name
     rename = (e) ->
       e.preventDefault()
+      edited = extend yes, {}, edited
       edited.name = params.name if params?.name?
       edited.name = edited.name.replace(/\s{2,}/g, ' ').trim()
       hub.emit 'update',
@@ -97,6 +105,7 @@ inject.bind 'page:view', component
         astro childstate, childparams, hub.child
           select: (p, cb) ->
             cb()
+            edited = extend yes, {}, edited
             if editing is 'start'
               edited.start = p
               if edited.end.isBefore edited.start
@@ -143,6 +152,7 @@ inject.bind 'page:view', component
             dom 'ul.defaultnames', state.config.defaultnames.map (name) ->
               choosename = (e) ->
                 e.preventDefault()
+                edited = extend yes, {}, edited
                 edited.name = name
                 hub.emit 'update',
                   edited: edited
@@ -188,17 +198,32 @@ inject.bind 'page:view', component
                 dom '.actions', dom 'a.action', { onclick: toggle('nothing'), attributes: href: '#' }, 'Next  →'
               ]
             else if editing is 'nothing'
-              dom '.actions', [
-                if !haschanges
-                  [
-                    dom 'a.action', { onclick: beginDeleteBooking, attributes: href: '#' }, '⌫  Delete'
-                    dom 'a.action', { attributes: href: '/' }, '✕  Close'
-                  ]
-                else
-                  [
-                    dom 'a.action', { onclick: cancelChanges, attributes: href: '#' }, '⤺  Cancel'
-                    dom 'a.action.primary', { onclick: saveChanges, attributes: href: '#' }, '✓  Update'
-                  ]
+              [
+                dom 'h3', 'Select:'
+                dom '.tagselection', ['upstairs', 'downstairs'].map (t) ->
+                  toggletag = (e) ->
+                    e.preventDefault()
+                    if edited.tags[t]
+                      delete edited.tags[t]
+                    else
+                      edited.tags[t] = yes
+                    hub.emit 'update', edited: edited
+                  if edited.tags[t]
+                    dom 'a.tag.selected', { onclick: toggletag, attributes: href: '#' }, "✓  #{t}"
+                  else
+                    dom 'a.tag', { onclick: toggletag, attributes: href: '#' }, t
+                dom '.actions', [
+                  if !haschanges
+                    [
+                      dom 'a.action', { onclick: beginDeleteBooking, attributes: href: '#' }, '⌫  Delete'
+                      dom 'a.action', { attributes: href: '/' }, '✕  Close'
+                    ]
+                  else
+                    [
+                      dom 'a.action', { onclick: cancelChanges, attributes: href: '#' }, '⤺  Cancel'
+                      dom 'a.action.primary', { onclick: saveChanges, attributes: href: '#' }, '✓  Update'
+                    ]
+                ]
               ]
           ]
       ]

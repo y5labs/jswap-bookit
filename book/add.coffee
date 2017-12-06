@@ -34,6 +34,7 @@ inject.bind 'page:add', component
         name: ''
         start: moment params.start
         end: moment params.end
+        tags: {}
     childparams =
       selectedRange: { start: edited.start, end: edited.end }
     if editing is 'start'
@@ -166,9 +167,24 @@ inject.bind 'page:add', component
                 dom '.actions', dom 'a.action', { onclick: toggle('nothing'), attributes: href: '#' }, 'Next  →'
               ]
             else if editing is 'nothing'
-              dom '.actions', [
-                dom 'a.action', { attributes: href: '/' }, '⤺  Cancel'
-                dom 'a.action.primary', { onclick: addBooking, attributes: href: '#' }, '＋  Add booking'
+              [
+                dom 'h3', 'Select:'
+                dom '.tagselection', ['upstairs', 'downstairs'].map (t) ->
+                  toggletag = (e) ->
+                    e.preventDefault()
+                    if edited.tags[t]
+                      delete edited.tags[t]
+                    else
+                      edited.tags[t] = yes
+                    hub.emit 'update', edited: edited
+                  if edited.tags[t]
+                    dom 'a.tag.selected', { onclick: toggletag, attributes: href: '#' }, "✓  #{t}"
+                  else
+                    dom 'a.tag', { onclick: toggletag, attributes: href: '#' }, t
+                dom '.actions', [
+                  dom 'a.action', { attributes: href: '/' }, '⤺  Cancel'
+                  dom 'a.action.primary', { onclick: addBooking, attributes: href: '#' }, '＋  Add booking'
+                ]
               ]
           ]
       ]

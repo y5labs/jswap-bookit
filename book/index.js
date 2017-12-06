@@ -69,7 +69,8 @@ module.exports = function(hub, scene, localstore) {
     payload = {
       name: p.name,
       start: moment(p.start).format(simpledate),
-      end: moment(p.end).format(simpledate)
+      end: moment(p.end).format(simpledate),
+      tags: p.tags
     };
     return request.post('/v0/addbooking').send(payload).end(function(err, res) {
       if (err != null) {
@@ -106,7 +107,8 @@ module.exports = function(hub, scene, localstore) {
       id: p.id,
       name: p.name,
       start: moment(p.start).format(simpledate),
-      end: moment(p.end).format(simpledate)
+      end: moment(p.end).format(simpledate),
+      tags: p.tags
     };
     return request.post('/v0/changebooking').send(payload).end(function(err, res) {
       if (err != null) {
@@ -155,7 +157,7 @@ res = component({
         }))
       ]), dom('.scroll', [
         dom('h2', date.format(nicedate)), dom('.bookings', ids.map(function(id) {
-          var bookingend, bookingstart, e;
+          var bookingend, bookingstart, e, t;
           e = state.bookings.events[id];
           bookingstart = moment(e.start);
           bookingend = moment(e.end);
@@ -163,7 +165,22 @@ res = component({
             attributes: {
               href: "/booking/" + e.id
             }
-          }, [dom('.booking-title', [e.name, date.isSame(bookingstart) ? bookingstart.isSame(bookingend) ? ' visiting' : ' arriving' : date.isSame(bookingend) ? ' leaving' : ' staying']), dom('.booking-dates', (bookingstart.format(shortdate)) + " — " + (bookingend.format(shortdate)))]);
+          }, [
+            dom('.booking-tags', [
+              (function() {
+                var i, len, ref4, results;
+                ref4 = ['upstairs', 'downstairs'];
+                results = [];
+                for (i = 0, len = ref4.length; i < len; i++) {
+                  t = ref4[i];
+                  if (e.tags[t]) {
+                    results.push(dom('span', t));
+                  }
+                }
+                return results;
+              })()
+            ]), dom('.booking-title', [e.name, date.isSame(bookingstart) ? bookingstart.isSame(bookingend) ? ' visiting' : ' arriving' : date.isSame(bookingend) ? ' leaving' : ' staying']), dom('.booking-dates', (bookingstart.format(shortdate)) + " — " + (bookingend.format(shortdate)))
+          ]);
         })), dom('.actions', dom('a.action', {
           attributes: {
             href: "/addbooking/" + childparams.selectedDate + "/" + (date.clone().add(2, 'd').format(simpledate)) + "/"

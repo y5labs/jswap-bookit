@@ -43,6 +43,7 @@ module.exports = (hub, scene, localstore) ->
       name: p.name
       start: moment(p.start).format simpledate
       end: moment(p.end).format simpledate
+      tags: p.tags
     request
       .post '/v0/addbooking'
       .send payload
@@ -76,6 +77,7 @@ module.exports = (hub, scene, localstore) ->
       name: p.name
       start: moment(p.start).format simpledate
       end: moment(p.end).format simpledate
+      tags: p.tags
     request
       .post '/v0/changebooking'
       .send payload
@@ -117,6 +119,9 @@ res = component
           bookingstart = moment(e.start)
           bookingend = moment(e.end)
           dom 'a.booking', { attributes: href: "/booking/#{e.id}" }, [
+            dom '.booking-tags', [
+              dom 'span', t for t in ['upstairs', 'downstairs'] when e.tags[t]
+            ]
             dom '.booking-title', [
               e.name
               if date.isSame bookingstart

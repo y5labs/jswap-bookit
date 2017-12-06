@@ -605,6 +605,37 @@ table {
 .booking .booking-dates {
   margin-top: 3px;
 }
+.booking .booking-tags {
+  float: right;
+}
+.booking .booking-tags span {
+  border: 1px solid #46413e;
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+.booking .booking-tags span + span {
+  margin-left: 5px;
+}
+.tagselection {
+  margin-top: 10px;
+}
+.tag {
+  border: 1px solid #ddd;
+  color: #ddd;
+  border-radius: 3px;
+  padding: 1px 5px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.tag.selected {
+  border-color: #46413e;
+  color: #46413e;
+}
+.tag + .tag {
+  margin-left: 5px;
+}
 .action {
   text-decoration: none;
   color: #46413e;

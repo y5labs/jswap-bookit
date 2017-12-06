@@ -54,7 +54,8 @@ inject.bind('page:add', component({
       edited = {
         name: '',
         start: moment(params.start),
-        end: moment(params.end)
+        end: moment(params.end),
+        tags: {}
       };
     }
     childparams = {
@@ -234,18 +235,48 @@ inject.bind('page:add', component({
                 href: '#'
               }
             }, 'Next  →'))
-          ] : editing === 'nothing' ? dom('.actions', [
-            dom('a.action', {
-              attributes: {
-                href: '/'
+          ] : editing === 'nothing' ? [
+            dom('h3', 'Select:'), dom('.tagselection', ['upstairs', 'downstairs'].map(function(t) {
+              var toggletag;
+              toggletag = function(e) {
+                e.preventDefault();
+                if (edited.tags[t]) {
+                  delete edited.tags[t];
+                } else {
+                  edited.tags[t] = true;
+                }
+                return hub.emit('update', {
+                  edited: edited
+                });
+              };
+              if (edited.tags[t]) {
+                return dom('a.tag.selected', {
+                  onclick: toggletag,
+                  attributes: {
+                    href: '#'
+                  }
+                }, "✓  " + t);
+              } else {
+                return dom('a.tag', {
+                  onclick: toggletag,
+                  attributes: {
+                    href: '#'
+                  }
+                }, t);
               }
-            }, '⤺  Cancel'), dom('a.action.primary', {
-              onclick: addBooking,
-              attributes: {
-                href: '#'
-              }
-            }, '＋  Add booking')
-          ]) : void 0
+            })), dom('.actions', [
+              dom('a.action', {
+                attributes: {
+                  href: '/'
+                }
+              }, '⤺  Cancel'), dom('a.action.primary', {
+                onclick: addBooking,
+                attributes: {
+                  href: '#'
+                }
+              }, '＋  Add booking')
+            ])
+          ] : void 0
         ]
       ])
     ]);

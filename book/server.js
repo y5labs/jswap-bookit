@@ -23,7 +23,7 @@ config = require('../config');
 
 readbookings = function(cb) {
   return fs.readFile('./data/bookings.csv', 'utf-8', function(err, data) {
-    var i, len, r, ref, res, rows;
+    var i, j, len, len1, r, ref, ref1, res, rows, t, tags;
     if (err != null) {
       return cb(err);
     }
@@ -35,6 +35,17 @@ readbookings = function(cb) {
     ref = rows.data;
     for (i = 0, len = ref.length; i < len; i++) {
       r = ref[i];
+      if ((r.tags != null) && r.tags.trim() !== '') {
+        tags = {};
+        ref1 = r.tags.split(',');
+        for (j = 0, len1 = ref1.length; j < len1; j++) {
+          t = ref1[j];
+          tags[t] = true;
+        }
+        r.tags = tags;
+      } else {
+        r.tags = {};
+      }
       res[r.id] = r;
     }
     return cb(null, res);
@@ -42,10 +53,18 @@ readbookings = function(cb) {
 };
 
 writebookings = function(events, cb) {
-  var cal;
+  var cal, e, i, len;
   events = Object.keys(events).map(function(id) {
     return events[id];
   });
+  for (i = 0, len = events.length; i < len; i++) {
+    e = events[i];
+    if (e.tags != null) {
+      e.tags = Object.keys(e.tags).join(',');
+    } else {
+      e.tags = null;
+    }
+  }
   cal = ical({
     domain: config.domain,
     name: config.title,
@@ -79,7 +98,8 @@ module.exports = function(app) {
         id: id,
         name: req.body.name,
         start: req.body.start,
-        end: req.body.end
+        end: req.body.end,
+        tags: req.body.tags
       };
       return writebookings(events, function(err) {
         if (err != null) {
@@ -124,6 +144,7 @@ module.exports = function(app) {
       booking.name = req.body.name;
       booking.start = req.body.start;
       booking.end = req.body.end;
+      booking.tags = req.body.tags;
       return writebookings(events, function(err) {
         if (err != null) {
           if (err.stack != null) {

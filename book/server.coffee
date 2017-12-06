@@ -17,11 +17,23 @@ readbookings = (cb) ->
       header: yes
       skipEmptyLines: yes
     res = {}
-    res[r.id] = r for r in rows.data
+    for r in rows.data
+      if r.tags? and r.tags.trim() isnt ''
+        tags = {}
+        tags[t] = yes for t in r.tags.split ','
+        r.tags = tags
+      else
+        r.tags = {}
+      res[r.id] = r
     cb null, res
 
 writebookings = (events, cb) ->
   events = Object.keys(events).map (id) -> events[id]
+  for e in events
+    if e.tags?
+      e.tags = Object.keys(e.tags).join ','
+    else
+      e.tags = null
   cal = ical
     domain: config.domain
     name: config.title
@@ -46,6 +58,7 @@ module.exports = (app) ->
         name: req.body.name
         start: req.body.start
         end: req.body.end
+        tags: req.body.tags
       writebookings events, (err) ->
         if err?
           if err.stack?
@@ -75,6 +88,7 @@ module.exports = (app) ->
       booking.name = req.body.name
       booking.start = req.body.start
       booking.end = req.body.end
+      booking.tags = req.body.tags
       writebookings events, (err) ->
         if err?
           if err.stack?
