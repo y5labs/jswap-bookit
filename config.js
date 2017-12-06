@@ -8,5 +8,9 @@ module.exports = {
   defaultnames: [
     'Ben Stiller',
     'Robin Williams'
+  ],
+  availableTags: [
+    'upstairs',
+    'downstairs'
   ]
 }

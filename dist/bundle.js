@@ -237,7 +237,7 @@ inject.bind('page:add', component({
               }
             }, 'Next  →'))
           ] : editing === 'nothing' ? [
-            dom('h3', 'Select:'), dom('.tagselection', ['upstairs', 'downstairs'].map(function(t) {
+            dom('h3', 'Select:'), dom('.tagselection', state.config.availableTags.map(function(t) {
               var toggletag;
               toggletag = function(e) {
                 e.preventDefault();
@@ -601,7 +601,7 @@ res = component({
             dom('.booking-tags', [
               (function() {
                 var i, len, ref4, results;
-                ref4 = ['upstairs', 'downstairs'];
+                ref4 = state.config.availableTags;
                 results = [];
                 for (i = 0, len = ref4.length; i < len; i++) {
                   t = ref4[i];
@@ -924,7 +924,7 @@ inject.bind('page:view', component({
               }
             }, 'Next  →'))
           ] : editing === 'nothing' ? [
-            dom('h3', 'Select:'), dom('.tagselection', ['upstairs', 'downstairs'].map(function(t) {
+            dom('h3', 'Select:'), dom('.tagselection', state.config.availableTags.map(function(t) {
               var toggletag;
               toggletag = function(e) {
                 e.preventDefault();

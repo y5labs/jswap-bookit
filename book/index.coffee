@@ -120,7 +120,7 @@ res = component
           bookingend = moment(e.end)
           dom 'a.booking', { attributes: href: "/booking/#{e.id}" }, [
             dom '.booking-tags', [
-              dom 'span', t for t in ['upstairs', 'downstairs'] when e.tags[t]
+              dom 'span', t for t in state.config.availableTags when e.tags[t]
             ]
             dom '.booking-title', [
               e.name

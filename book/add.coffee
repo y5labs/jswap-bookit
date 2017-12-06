@@ -169,7 +169,7 @@ inject.bind 'page:add', component
             else if editing is 'nothing'
               [
                 dom 'h3', 'Select:'
-                dom '.tagselection', ['upstairs', 'downstairs'].map (t) ->
+                dom '.tagselection', state.config.availableTags.map (t) ->
                   toggletag = (e) ->
                     e.preventDefault()
                     if edited.tags[t]

@@ -294,7 +294,7 @@ inject.bind('page:view', component({
               }
             }, 'Next  →'))
           ] : editing === 'nothing' ? [
-            dom('h3', 'Select:'), dom('.tagselection', ['upstairs', 'downstairs'].map(function(t) {
+            dom('h3', 'Select:'), dom('.tagselection', state.config.availableTags.map(function(t) {
               var toggletag;
               toggletag = function(e) {
                 e.preventDefault();

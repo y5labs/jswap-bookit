@@ -169,7 +169,7 @@ res = component({
             dom('.booking-tags', [
               (function() {
                 var i, len, ref4, results;
-                ref4 = ['upstairs', 'downstairs'];
+                ref4 = state.config.availableTags;
                 results = [];
                 for (i = 0, len = ref4.length; i < len; i++) {
                   t = ref4[i];
