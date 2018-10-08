@@ -27,7 +27,7 @@
     "http-mutunga": "1.0.0",
     "ical-generator": "0.2.10",
     "injectinto": "1.2.0",
-    "moment": "2.18.1",
+    "moment": "^2.22.2",
     "moment-timezone": "0.5.13",
     "normalize.css": "6.0.0",
     "numeral": "2.0.6",
@@ -48,7 +48,7 @@
     "page": "1.7.1",
     "pagepro": "0.1.2",
     "shortid": "2.2.8",
-    "superagent": "3.5.2",
+    "superagent": "^4.0.0-beta.5",
     "timespanner": "3.0.0",
     "titlecase": "1.1.2",
     "whakaruru": "1.0.2"
@@ -58,8 +58,8 @@
     "concurrently": "2.2.0",
     "exorcist": "0.4.0",
     "stylus": "0.54.5",
-    "uglifyjs": "2.4.10",
     "uglifyify": "3.0.3",
+    "uglifyjs": "2.4.10",
     "watchify": "3.7.0"
   }
 }
