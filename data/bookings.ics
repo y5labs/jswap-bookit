@@ -1,8 +1,0 @@
-BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//TCOATS//BookIT//EN
-NAME:Book this thing
-X-WR-CALNAME:Book this thing
-TIMEZONE-ID:Pacific/Auckland
-X-WR-TIMEZONE:Pacific/Auckland
-END:VCALENDAR
